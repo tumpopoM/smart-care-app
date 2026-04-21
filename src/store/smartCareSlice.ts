@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { v4 as uuidv4 } from 'uuid';
 
 export type SmartCare = {
   id: string;
@@ -27,7 +28,7 @@ const smartCareSlice = createSlice({
       }>,
     ) => {
       const newItem: SmartCare = {
-        id: Date.now().toString(),
+        id: uuidv4(),
         title: action.payload.title,
         description: action.payload.description,
         createdAt: Date.now(),
