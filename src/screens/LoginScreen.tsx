@@ -3,6 +3,7 @@ import { View, Text, TextInput, Button } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useNavigation } from '@react-navigation/native';
 
 const schema = z.object({
   username: z
@@ -22,6 +23,8 @@ type FormData = {
 };
 
 export default function LoginScreen() {
+  const navigation = useNavigation();
+
   const {
     control,
     handleSubmit,
@@ -33,6 +36,7 @@ export default function LoginScreen() {
 
   const onSubmit = (data: FormData) => {
     console.log('LOGIN:', data);
+    navigation.navigate('Main' as never);
   };
 
   return (
