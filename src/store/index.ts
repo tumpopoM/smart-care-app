@@ -1,14 +1,9 @@
-import { configureStore, createSlice } from '@reduxjs/toolkit';
-
-const dummySlice = createSlice({
-  name: 'dummy',
-  initialState: {},
-  reducers: {},
-});
+import { configureStore } from '@reduxjs/toolkit';
+import smartCareReducer from './smartCareSlice';
 
 export const store = configureStore({
   reducer: {
-    dummy: dummySlice.reducer,
+    smartCare: smartCareReducer,
   },
 });
 
