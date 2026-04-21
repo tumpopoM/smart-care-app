@@ -1,5 +1,11 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -25,6 +31,8 @@ type FormData = {
 
 export default function LoginScreen() {
   const navigation = useNavigation();
+  const [focusedField, setFocusedField] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const {
     control,
@@ -35,9 +43,13 @@ export default function LoginScreen() {
     mode: 'onChange',
   });
 
-  const onSubmit = (data: FormData) => {
-    console.log('LOGIN:', data);
+  const onSubmit = () => {
     navigation.navigate('Main' as never);
+    setLoading(true);
+    setTimeout(() => {
+      navigation.navigate('Main' as never);
+      setLoading(false);
+    }, 800);
   };
 
   return (
@@ -50,8 +62,13 @@ export default function LoginScreen() {
             placeholder="เลขบัตร / เบอร์โทร"
             value={value}
             onChangeText={onChange}
-            style={styles.input}
+            style={[
+              styles.input,
+              focusedField === 'login' && styles.inputFocused,
+            ]}
             keyboardType="numeric"
+            onFocus={() => setFocusedField('login')}
+            onBlur={() => setFocusedField(null)}
           />
         )}
       />
@@ -62,9 +79,13 @@ export default function LoginScreen() {
 
       <TouchableOpacity
         onPress={handleSubmit(onSubmit)}
-        style={[styles.button, !isValid && styles.buttonDisabled]}
+        style={[styles.button, (!isValid || loading) && styles.buttonDisabled]}
       >
-        <Text style={styles.buttonText}>Login</Text>
+        {loading ? (
+          <ActivityIndicator color="#FFF" />
+        ) : (
+          <Text style={styles.buttonText}>Login</Text>
+        )}
       </TouchableOpacity>
     </View>
   );

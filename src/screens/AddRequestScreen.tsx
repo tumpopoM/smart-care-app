@@ -1,5 +1,16 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+  ActivityIndicator,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+} from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -21,6 +32,8 @@ type FormData = {
 export default function AddRequestScreen() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const [focusedField, setFocusedField] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const {
     control,
@@ -32,53 +45,89 @@ export default function AddRequestScreen() {
   });
 
   const onSubmit = (data: FormData) => {
-    dispatch(addRequest(data));
-    navigation.goBack();
+    setLoading(true);
+    setTimeout(() => {
+      dispatch(addRequest(data));
+      setLoading(false);
+
+      Alert.alert('สำเร็จ', 'สร้างรายการเรียบร้อยแล้ว', [
+        {
+          text: 'ตกลง',
+          onPress: () => navigation.goBack(),
+        },
+      ]);
+    }, 800);
   };
 
   return (
-    <View style={[styles.container]}>
-      <Controller
-        control={control}
-        name="title"
-        render={({ field: { onChange, value } }) => (
-          <TextInput
-            placeholder="Title"
-            value={value}
-            onChangeText={onChange}
-            style={styles.input}
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={[styles.container]}>
+          <Controller
+            control={control}
+            name="title"
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                placeholder="Title"
+                value={value}
+                onChangeText={onChange}
+                onFocus={() => setFocusedField('title')}
+                onBlur={() => setFocusedField(null)}
+                style={[
+                  styles.input,
+                  focusedField === 'title' && styles.inputFocused,
+                ]}
+              />
+            )}
           />
-        )}
-      />
-      {errors.title && (
-        <Text style={styles.errorMessage}>{errors.title.message}</Text>
-      )}
+          {errors.title && (
+            <Text style={styles.errorMessage}>{errors.title.message}</Text>
+          )}
 
-      <Controller
-        control={control}
-        name="description"
-        render={({ field: { onChange, value } }) => (
-          <TextInput
-            placeholder="Description"
-            value={value}
-            onChangeText={onChange}
-            style={styles.textArea}
-            multiline
-            numberOfLines={4}
+          <Controller
+            control={control}
+            name="description"
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                placeholder="Description"
+                value={value}
+                onChangeText={onChange}
+                onFocus={() => setFocusedField('description')}
+                onBlur={() => setFocusedField(null)}
+                style={[
+                  styles.textArea,
+                  focusedField === 'description' && styles.inputFocused,
+                ]}
+                multiline
+                numberOfLines={4}
+              />
+            )}
           />
-        )}
-      />
-      {errors.description && (
-        <Text style={styles.errorMessage}>{errors.description.message}</Text>
-      )}
+          {errors.description && (
+            <Text style={styles.errorMessage}>
+              {errors.description.message}
+            </Text>
+          )}
 
-      <TouchableOpacity
-        style={[styles.floatingButton, !isValid && styles.buttonDisabled]}
-        onPress={handleSubmit(onSubmit)}
-        disabled={!isValid}
-      >
-        <Text style={styles.buttonText}>Submit</Text>
-      </TouchableOpacity>
-    </View>
+          <TouchableOpacity
+            style={[
+              styles.floatingButton,
+              (!isValid || loading) && styles.buttonDisabled,
+            ]}
+            onPress={handleSubmit(onSubmit)}
+            disabled={!isValid || loading}
+          >
+            {loading ? (
+              <ActivityIndicator color="#FFF" />
+            ) : (
+              <Text style={styles.buttonText}>Submit</Text>
+            )}
+          </TouchableOpacity>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }

@@ -13,16 +13,17 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/types';
 import { styles } from '../theme/styles';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Main'>;
 
 export default function MainScreen() {
   const list = useSelector((state: RootState) => state.smartCare.list);
   const navigation = useNavigation<NavigationProp>();
-
   const [searchId, setSearchId] = useState('');
-
   const [error, setError] = useState('');
+  const [focusedField, setFocusedField] = useState<string | null>(null);
+  const insets = useSafeAreaInsets();
 
   const handleSearch = () => {
     if (!searchId.trim()) return;
@@ -48,7 +49,13 @@ export default function MainScreen() {
             setSearchId(text);
             setError('');
           }}
-          style={[styles.input, { paddingRight: 45 }]}
+          onFocus={() => setFocusedField('search')}
+          onBlur={() => setFocusedField(null)}
+          style={[
+            styles.input,
+            { paddingRight: 45 },
+            focusedField === 'search' && styles.inputFocused,
+          ]}
         />
 
         <TouchableOpacity onPress={handleSearch} style={styles.iconSearch}>
@@ -87,6 +94,9 @@ export default function MainScreen() {
             <Text style={styles.itemId}>ID: {item.id}</Text>
           </TouchableOpacity>
         )}
+        contentContainerStyle={{
+          paddingBottom: 100 + insets.bottom,
+        }}
       />
     </View>
   );

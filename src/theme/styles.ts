@@ -14,6 +14,22 @@ export const styles = StyleSheet.create({
     marginVertical: 8,
     backgroundColor: '#FFF',
   },
+  textArea: {
+    borderWidth: 1,
+    borderColor: '#DDD',
+    backgroundColor: '#FFF',
+    borderRadius: 10,
+    padding: 12,
+    height: 120,
+    textAlignVertical: 'top',
+  },
+  inputFocused: {
+    borderColor: '#2F80ED',
+    shadowColor: '#2F80ED',
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 2,
+  },
   button: {
     backgroundColor: '#2F80ED',
     padding: 14,
@@ -84,14 +100,5 @@ export const styles = StyleSheet.create({
   value: {
     fontSize: 16,
     color: '#333',
-  },
-  textArea: {
-    borderWidth: 1,
-    borderColor: '#DDD',
-    backgroundColor: '#FFF',
-    borderRadius: 10,
-    padding: 12,
-    height: 120, // ⭐ เพิ่มความสูงตรงนี้
-    textAlignVertical: 'top', // ⭐ สำคัญมาก (Android)
   },
 });
