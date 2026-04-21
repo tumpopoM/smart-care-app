@@ -1,5 +1,12 @@
 import React from 'react';
-import { TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  TextInput,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator,
+  Text,
+} from 'react-native';
 
 type Props = {
   value: string;
@@ -12,6 +19,8 @@ type Props = {
   keyboardType?: any;
   rightIcon?: React.ReactNode;
   onRightIconPress?: () => void;
+  onSubmitEditing?: () => void;
+  loading?: boolean;
 };
 
 export default function CustomInput({
@@ -25,6 +34,8 @@ export default function CustomInput({
   keyboardType,
   rightIcon,
   onRightIconPress,
+  onSubmitEditing,
+  loading,
 }: Props) {
   return (
     <View style={{ position: 'relative' }}>
@@ -36,6 +47,8 @@ export default function CustomInput({
         onBlur={onBlur}
         multiline={multiline}
         keyboardType={keyboardType}
+        onSubmitEditing={onSubmitEditing}
+        returnKeyType="search"
         style={[
           styles.input,
           multiline ? styles.textArea : null,
@@ -46,7 +59,13 @@ export default function CustomInput({
 
       {rightIcon && (
         <TouchableOpacity onPress={onRightIconPress} style={styles.iconSearch}>
-          {rightIcon}
+          {loading ? (
+            <ActivityIndicator size="small" color="#333" />
+          ) : value ? (
+            <Text>❌</Text>
+          ) : (
+            rightIcon
+          )}
         </TouchableOpacity>
       )}
     </View>

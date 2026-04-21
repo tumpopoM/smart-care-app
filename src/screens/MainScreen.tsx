@@ -19,18 +19,27 @@ export default function MainScreen() {
   const [error, setError] = useState('');
   const [focusedField, setFocusedField] = useState<string | null>(null);
   const insets = useSafeAreaInsets();
+  const [loading, setLoading] = useState(false);
 
   const handleSearch = () => {
+    if (loading) return;
+
     if (!searchId.trim()) return;
 
-    const found = list.find(item => item.id === searchId);
+    setLoading(true);
 
-    if (found) {
-      setError('');
-      navigation.navigate('RequestDetail', { item: found });
-    } else {
-      setError('ไม่พบ Smart Care ID');
-    }
+    setTimeout(() => {
+      const found = list.find(item => item.id === searchId);
+
+      if (found) {
+        setError('');
+        navigation.navigate('RequestDetail', { item: found });
+      } else {
+        setError('ไม่พบ Smart Care ID');
+      }
+
+      setLoading(false);
+    }, 500);
   };
 
   return (
@@ -47,29 +56,16 @@ export default function MainScreen() {
         onFocus={() => setFocusedField('search')}
         onBlur={() => setFocusedField(null)}
         rightIcon={<Icon name="search-outline" size={20} color="#333" />}
-        onRightIconPress={handleSearch}
+        onRightIconPress={() => {
+          if (searchId) {
+            setSearchId('');
+          } else {
+            handleSearch();
+          }
+        }}
+        onSubmitEditing={handleSearch}
+        loading={loading}
       />
-      {/* <View style={{ position: 'relative' }}>
-        <TextInput
-          placeholder="Search by ID"
-          value={searchId}
-          onChangeText={text => {
-            setSearchId(text);
-            setError('');
-          }}
-          onFocus={() => setFocusedField('search')}
-          onBlur={() => setFocusedField(null)}
-          style={[
-            styles.input,
-            { paddingRight: 45 },
-            focusedField === 'search' && styles.inputFocused,
-          ]}
-        />
-
-        <TouchableOpacity onPress={handleSearch} style={styles.iconSearch}>
-          <Icon name="search-outline" size={20} color="#333" />
-        </TouchableOpacity>
-      </View> */}
 
       {error ? <Text style={styles.errorMessage}>{error}</Text> : null}
 
