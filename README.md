@@ -1,97 +1,166 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Smart Care System (React Native)
 
-# Getting Started
+Smart Care System
+พัฒนาโดยใช้ React Native ตาม requirement ที่ได้รับ
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+---
 
-## Step 1: Start Metro
+## 📱 Features
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+### 1. Login
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+- รองรับการเข้าสู่ระบบด้วย:
 
-```sh
-# Using npm
-npm start
+  - เลขบัตรประชาชน (13 หลัก)
+  - เบอร์โทรศัพท์ (10 หลัก)
 
-# OR using Yarn
-yarn start
+- ปุ่ม Submit จะกดได้เมื่อข้อมูลถูกต้องเท่านั้น
+- เมื่อเข้าสู่ระบบสำเร็จ → ไปหน้า Main
+
+---
+
+### 2. Main Page
+
+- แสดงรายการ Smart Care Requests
+- แสดง:
+
+  - Smart Care ID
+  - Title (1 บรรทัด)
+
+- สามารถ:
+
+  - กดรายการเพื่อดูรายละเอียด
+  - ค้นหาด้วย Smart Care ID
+  - เพิ่มรายการใหม่
+
+---
+
+### 3. Search
+
+- รองรับการค้นหาด้วย Smart Care ID
+- กดปุ่ม Search หรือกด Enter เพื่อค้นหา
+- หากพบ → ไปหน้า Request Detail
+- หากไม่พบ → แสดง error message
+- มี Clear (❌) เพื่อล้างข้อความ
+- มี Loading indicator ระหว่างค้นหา
+
+---
+
+### 4. Add Request
+
+- ผู้ใช้สามารถสร้าง Smart Care Request ใหม่โดยกรอก:
+
+  - Title
+  - Description
+
+- ต้องกรอกข้อมูลให้ครบทุกช่อง
+- ปุ่ม Submit จะกดได้เมื่อข้อมูลถูกต้อง
+- เมื่อ Submit สำเร็จ → เพิ่มรายการใหม่
+
+---
+
+### 5. Request Detail
+
+- แสดงรายละเอียดของ Smart Care:
+
+  - Smart Care ID
+  - Title
+  - Description
+  - วันที่สร้าง (Timestamp)
+
+---
+
+## 🧱 Tech Stack
+
+- React Native
+- TypeScript
+- Redux Toolkit (State Management)
+- React Hook Form (Form Handling)
+- Zod (Schema Validation)
+- React Navigation
+
+---
+
+## 🧠 Key Implementation
+
+- ใช้ Redux Toolkit สำหรับจัดการ state ของ Smart Care
+- ใช้ react-hook-form + Zod สำหรับ validation ของ form
+- แยก reusable component เช่น `CustomInput`
+- จัดการ UX เช่น:
+
+  - Input focus state (border เปลี่ยนสี)
+  - Disabled button
+  - Loading state
+  - Clear input
+
+- ใช้ Navigation แบบ stack
+
+---
+
+## 🚀 Getting Started
+
+### 1. Install dependencies
+
+```bash
+npm install
 ```
 
-## Step 2: Build and run your app
+---
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+### 2. Run Android
 
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+```bash
+npx react-native run-android
 ```
 
-### iOS
+---
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+### 3. Start Metro
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
+```bash
+npx react-native start
 ```
 
-Then, and every time you update your native dependencies, run:
+---
 
-```sh
-bundle exec pod install
+## 📁 Project Structure
+
+```text
+src/
+ ├── components/
+ │   └── CustomInput.tsx
+ │
+ ├── navigation/
+ │   ├── AppNavigator.tsx
+ │   └── types.ts
+ │
+ ├── screens/
+ │   ├── LoginScreen.tsx
+ │   ├── MainScreen.tsx
+ │   ├── AddRequestScreen.tsx
+ │   └── RequestDetailScreen.tsx
+ │
+ ├── store/
+ │   ├── index.ts
+ │   └── smartCareSlice.ts
+ │
+ ├── theme/
+ │   └── styles.ts
+ │
+ └── types/
+     └── react-native-vector-icons.d.ts
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+---
 
-```sh
-# Using npm
-npm run ios
+## ✨ Notes
 
-# OR using Yarn
-yarn ios
-```
+- Search ทำงานตาม requirement โดยใช้การกดปุ่มหรือ Enter
+- มีการปรับ UX ให้ใช้งานง่ายขึ้น เช่น clear input และ loading indicator
+- โครงสร้างถูกออกแบบให้สามารถขยายต่อได้ง่าย (scalable structure)
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+---
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+## 📌 Author
 
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+Developed by Wijitra Rattanason
