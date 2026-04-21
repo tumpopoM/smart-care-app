@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigation } from '@react-navigation/native';
+import { styles } from '../theme/styles';
 
 const schema = z.object({
   username: z
@@ -40,9 +41,7 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={{ flex: 1, padding: 20, justifyContent: 'center' }}>
-      <Text>Login</Text>
-
+    <View style={[styles.container, { justifyContent: 'center' }]}>
       <Controller
         control={control}
         name="username"
@@ -51,25 +50,22 @@ export default function LoginScreen() {
             placeholder="เลขบัตร / เบอร์โทร"
             value={value}
             onChangeText={onChange}
-            style={{
-              borderWidth: 1,
-              marginVertical: 10,
-              padding: 10,
-            }}
+            style={styles.input}
             keyboardType="numeric"
           />
         )}
       />
 
       {errors.username && (
-        <Text style={{ color: 'red' }}>{errors.username.message}</Text>
+        <Text style={styles.errorMessage}>{errors.username.message}</Text>
       )}
 
-      <Button
-        title="Submit"
+      <TouchableOpacity
         onPress={handleSubmit(onSubmit)}
-        disabled={!isValid}
-      />
+        style={[styles.button, !isValid && styles.buttonDisabled]}
+      >
+        <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
     </View>
   );
 }

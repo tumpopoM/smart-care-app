@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch } from 'react-redux';
 import { addRequest } from '../store/smartCareSlice';
 import { useNavigation } from '@react-navigation/native';
+import { styles } from '../theme/styles';
 
 const schema = z.object({
   title: z.string().min(1, 'กรุณากรอก title'),
@@ -36,9 +37,7 @@ export default function AddRequestScreen() {
   };
 
   return (
-    <View style={{ flex: 1, padding: 20 }}>
-      <Text>Add Request</Text>
-
+    <View style={[styles.container]}>
       <Controller
         control={control}
         name="title"
@@ -47,12 +46,12 @@ export default function AddRequestScreen() {
             placeholder="Title"
             value={value}
             onChangeText={onChange}
-            style={{ borderWidth: 1, marginVertical: 10, padding: 10 }}
+            style={styles.input}
           />
         )}
       />
       {errors.title && (
-        <Text style={{ color: 'red' }}>{errors.title.message}</Text>
+        <Text style={styles.errorMessage}>{errors.title.message}</Text>
       )}
 
       <Controller
@@ -63,19 +62,23 @@ export default function AddRequestScreen() {
             placeholder="Description"
             value={value}
             onChangeText={onChange}
-            style={{ borderWidth: 1, marginVertical: 10, padding: 10 }}
+            style={styles.textArea}
+            multiline
+            numberOfLines={4}
           />
         )}
       />
       {errors.description && (
-        <Text style={{ color: 'red' }}>{errors.description.message}</Text>
+        <Text style={styles.errorMessage}>{errors.description.message}</Text>
       )}
 
-      <Button
-        title="Submit"
+      <TouchableOpacity
+        style={[styles.floatingButton, !isValid && styles.buttonDisabled]}
         onPress={handleSubmit(onSubmit)}
         disabled={!isValid}
-      />
+      >
+        <Text style={styles.buttonText}>Submit</Text>
+      </TouchableOpacity>
     </View>
   );
 }
