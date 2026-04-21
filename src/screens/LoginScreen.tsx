@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../theme/styles';
+import CustomInput from '../components/CustomInput';
 
 const schema = z.object({
   username: z
@@ -58,15 +53,24 @@ export default function LoginScreen() {
         control={control}
         name="username"
         render={({ field: { onChange, value } }) => (
-          <TextInput
-            placeholder="เลขบัตร / เบอร์โทร"
+          // <TextInput
+          //   placeholder="เลขบัตร / เบอร์โทร"
+          //   value={value}
+          //   onChangeText={onChange}
+          //   style={[
+          //     styles.input,
+          //     focusedField === 'login' && styles.inputFocused,
+          //   ]}
+          //   keyboardType="numeric"
+          //   onFocus={() => setFocusedField('login')}
+          //   onBlur={() => setFocusedField(null)}
+          // />
+          <CustomInput
             value={value}
             onChangeText={onChange}
-            style={[
-              styles.input,
-              focusedField === 'login' && styles.inputFocused,
-            ]}
+            placeholder="เลขบัตร / เบอร์โทร"
             keyboardType="numeric"
+            isFocused={focusedField === 'login'}
             onFocus={() => setFocusedField('login')}
             onBlur={() => setFocusedField(null)}
           />

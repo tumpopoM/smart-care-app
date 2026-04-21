@@ -69,6 +69,7 @@ export const styles = StyleSheet.create({
   },
   errorMessage: {
     color: 'red',
+    marginTop: 4,
   },
   iconSearch: {
     position: 'absolute',

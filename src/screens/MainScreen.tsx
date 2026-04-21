@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { useNavigation } from '@react-navigation/native';
@@ -14,6 +8,7 @@ import { RootStackParamList } from '../navigation/types';
 import { styles } from '../theme/styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import CustomInput from '../components/CustomInput';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Main'>;
 
@@ -41,7 +36,20 @@ export default function MainScreen() {
   return (
     <View style={[styles.container, { justifyContent: 'center' }]}>
       {/* Search */}
-      <View style={{ position: 'relative' }}>
+      <CustomInput
+        value={searchId}
+        onChangeText={text => {
+          setSearchId(text);
+          setError('');
+        }}
+        placeholder="Search by ID"
+        isFocused={focusedField === 'search'}
+        onFocus={() => setFocusedField('search')}
+        onBlur={() => setFocusedField(null)}
+        rightIcon={<Icon name="search-outline" size={20} color="#333" />}
+        onRightIconPress={handleSearch}
+      />
+      {/* <View style={{ position: 'relative' }}>
         <TextInput
           placeholder="Search by ID"
           value={searchId}
@@ -61,7 +69,7 @@ export default function MainScreen() {
         <TouchableOpacity onPress={handleSearch} style={styles.iconSearch}>
           <Icon name="search-outline" size={20} color="#333" />
         </TouchableOpacity>
-      </View>
+      </View> */}
 
       {error ? <Text style={styles.errorMessage}>{error}</Text> : null}
 
