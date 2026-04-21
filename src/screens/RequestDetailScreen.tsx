@@ -1,20 +1,12 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { RootStackParamList } from '../navigation/types';
 
-type ParamType = {
-  RequestDetail: {
-    item: {
-      id: string;
-      title: string;
-      description: string;
-      createdAt: number;
-    };
-  };
-};
+type RouteProps = RouteProp<RootStackParamList, 'RequestDetail'>;
 
 export default function RequestDetailScreen() {
-  const route = useRoute<RouteProp<ParamType, 'RequestDetail'>>();
+  const route = useRoute<RouteProps>();
   const { item } = route.params;
 
   return (

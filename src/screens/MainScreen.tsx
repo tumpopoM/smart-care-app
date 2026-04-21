@@ -10,10 +10,15 @@ import {
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../navigation/types';
+import { Alert } from 'react-native';
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Main'>;
 
 export default function MainScreen() {
-  const navigation = useNavigation();
   const list = useSelector((state: RootState) => state.smartCare.list);
+  const navigation = useNavigation<NavigationProp>();
 
   const [searchId, setSearchId] = useState('');
 
@@ -21,9 +26,9 @@ export default function MainScreen() {
     const found = list.find(item => item.id === searchId);
 
     if (found) {
-      navigation.navigate('RequestDetail' as never, { item: found } as never);
+      navigation.navigate('RequestDetail', { item: found });
     } else {
-      alert('ไม่พบ Smart Care ID');
+      Alert.alert('ไม่พบ Smart Care ID');
     }
   };
 
@@ -43,7 +48,7 @@ export default function MainScreen() {
       {/* Add Button */}
       <Button
         title="Add Request"
-        onPress={() => navigation.navigate('AddRequest' as never)}
+        onPress={() => navigation.navigate('AddRequest')}
       />
 
       {/* List */}
@@ -52,9 +57,7 @@ export default function MainScreen() {
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('RequestDetail' as never, { item } as never)
-            }
+            onPress={() => navigation.navigate('RequestDetail', { item })}
             style={{ padding: 10, borderBottomWidth: 1 }}
           >
             <Text>{item.id}</Text>
