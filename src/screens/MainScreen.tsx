@@ -92,9 +92,6 @@ export default function MainScreen() {
             <Text numberOfLines={1} style={styles.itemTitle}>
               {item.title}
             </Text>
-            <Text numberOfLines={1} style={styles.itemDescription}>
-              {item.description}
-            </Text>
             <Text style={styles.itemId}>ID: {item.id}</Text>
           </TouchableOpacity>
         )}
