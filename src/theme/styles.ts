@@ -78,7 +78,6 @@ export const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
   },
-
   floatingButton: {
     position: 'absolute',
     bottom: 20,

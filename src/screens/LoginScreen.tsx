@@ -53,18 +53,6 @@ export default function LoginScreen() {
         control={control}
         name="username"
         render={({ field: { onChange, value } }) => (
-          // <TextInput
-          //   placeholder="เลขบัตร / เบอร์โทร"
-          //   value={value}
-          //   onChangeText={onChange}
-          //   style={[
-          //     styles.input,
-          //     focusedField === 'login' && styles.inputFocused,
-          //   ]}
-          //   keyboardType="numeric"
-          //   onFocus={() => setFocusedField('login')}
-          //   onBlur={() => setFocusedField(null)}
-          // />
           <CustomInput
             value={value}
             onChangeText={onChange}

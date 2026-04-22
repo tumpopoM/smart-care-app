@@ -70,17 +70,6 @@ export default function AddRequestScreen() {
             control={control}
             name="title"
             render={({ field: { onChange, value } }) => (
-              // <TextInput
-              //   placeholder="Title"
-              //   value={value}
-              //   onChangeText={onChange}
-              //   onFocus={() => setFocusedField('title')}
-              //   onBlur={() => setFocusedField(null)}
-              //   style={[
-              //     styles.input,
-              //     focusedField === 'title' && styles.inputFocused,
-              //   ]}
-              // />
               <CustomInput
                 value={value}
                 onChangeText={onChange}
@@ -99,19 +88,6 @@ export default function AddRequestScreen() {
             control={control}
             name="description"
             render={({ field: { onChange, value } }) => (
-              // <TextInput
-              //   placeholder="Description"
-              //   value={value}
-              //   onChangeText={onChange}
-              //   onFocus={() => setFocusedField('description')}
-              //   onBlur={() => setFocusedField(null)}
-              //   style={[
-              //     styles.textArea,
-              //     focusedField === 'description' && styles.inputFocused,
-              //   ]}
-              //   multiline
-              //   numberOfLines={4}
-              // />
               <CustomInput
                 value={value}
                 onChangeText={onChange}
