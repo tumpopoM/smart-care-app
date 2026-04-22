@@ -73,7 +73,6 @@ export default function MainScreen() {
       <TouchableOpacity
         style={styles.floatingButton}
         onPress={() => {
-          console.log('ADD CLICK');
           navigation.navigate('AddRequest');
         }}
       >
