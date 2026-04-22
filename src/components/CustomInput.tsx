@@ -5,8 +5,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
-  Text,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 type Props = {
   value: string;
@@ -62,7 +62,7 @@ export default function CustomInput({
           {loading ? (
             <ActivityIndicator size="small" color="#333" />
           ) : value ? (
-            <Text>❌</Text>
+            <Icon name="close-outline" size={20} color="#333" />
           ) : (
             rightIcon
           )}
