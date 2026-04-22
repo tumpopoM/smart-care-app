@@ -12,16 +12,17 @@ export default function RequestDetailScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.section}>
-        <Text style={styles.label}>ID: {item.id}</Text>
+      <View style={styles.card}>
+        <Text style={styles.id}>ID: {item.id}</Text>
+
+        <Text style={styles.title}>{item.title}</Text>
+
+        <Text style={styles.description}>{item.description}</Text>
+
+        <Text style={styles.date}>
+          Created At: {new Date(item.createdAt).toLocaleString()}
+        </Text>
       </View>
-      <View style={styles.section}>
-        <Text>{item.title}</Text>
-      </View>
-      <View style={styles.section}>
-        <Text>{item.description}</Text>
-      </View>
-      <Text>Create Date: {new Date(item.createdAt).toLocaleString()}</Text>
     </View>
   );
 }

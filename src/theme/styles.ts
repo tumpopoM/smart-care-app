@@ -101,4 +101,24 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     color: '#333',
   },
+  title: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 8,
+  },
+
+  description: {
+    color: '#666',
+    marginBottom: 12,
+  },
+  id: {
+    color: '#999',
+    fontSize: 12,
+    marginBottom: 8,
+  },
+
+  date: {
+    fontSize: 12,
+    color: '#999',
+  },
 });
